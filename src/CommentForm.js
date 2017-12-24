@@ -5,26 +5,31 @@ import style from './style';
 class CommentForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { author: '', text: '' };
+    this.state = { author: '', me:'', text: '' };
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleMeChange = this.handleMeChange.bind(this); 
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleAuthorChange(e) {
     this.setState({ author: e.target.value });
   }
+  handleMeChange(e) {
+    this.setState({ me: e.target.value });
+  }    
   handleTextChange(e) {
     this.setState({ text: e.target.value });
   }
   handleSubmit(e) {
     e.preventDefault();
     let author = this.state.author.trim();
+    let me = this.state.me.trim();  
     let text = this.state.text.trim();
-    if (!text || !author) {
+    if (!text || !author || !me) {
       return;
     }
-    this.props.onCommentSubmit({ author: author, text: text });
-    this.setState({ author: '', text: '' });
+    this.props.onCommentSubmit({ author: author, me: me, text: text });
+    this.setState({ author: '', me:'', text: '' });
   }
   render() {
     return (
@@ -35,6 +40,12 @@ class CommentForm extends Component {
           style={ style.commentFormAuthor}
           value={ this.state.author }
           onChange={ this.handleAuthorChange } />
+        <input
+          type='text'
+          placeholder='Changed by me...'
+          style={ style.commentFormAuthor}
+          value={ this.state.me }
+          onChange={ this.handleMeChange } />
         <input
           type='text'
           placeholder='Say something...'

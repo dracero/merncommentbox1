@@ -65,7 +65,7 @@ class CommentBox extends Component {
   render() {
     return (
       <div style={ style.commentBox }>
-        <h2 style={ style.title }>Comments:</h2>
+        <h1 style={ style.title }>Diegos:</h1>
       <CommentList
         onCommentDelete={ this.handleCommentDelete }
         onCommentUpdate={ this.handleCommentUpdate }

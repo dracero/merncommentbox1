@@ -68,6 +68,7 @@ Comment.find(function(err, comments) {
  var comment = new Comment();
  //body parser lets us use the req.body
 comment.author = req.body.author;
+comment.me = req.body.me;    
 comment.text = req.body.text;
 comment.save(function(err) {
  if (err)
@@ -87,6 +88,7 @@ Comment.findById(req.params.comment_id, function(err, comment) {
  //setting the new author and text to whatever was changed. If 
 //nothing was changed we will not alter the field.
  (req.body.author) ? comment.author = req.body.author : null;
+ (req.body.me) ? comment.me = req.body.me : null;    
  (req.body.text) ? comment.text = req.body.text : null;
  //save comment
  comment.save(function(err) {

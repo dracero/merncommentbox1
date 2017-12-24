@@ -8,12 +8,14 @@ class Comment extends Component {
     this.state = {
       toBeUpdated: false,
       author: '',
+      me: '',    
       text: ''
     };
     //binding all our functions to this class
     this.deleteComment = this.deleteComment.bind(this);
     this.updateComment = this.updateComment.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleMeChange = this.handleMeChange.bind(this); 
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleCommentUpdate = this.handleCommentUpdate.bind(this);
   }
@@ -28,12 +30,14 @@ class Comment extends Component {
     //if author or text changed, set it. if not, leave null and our PUT request
     //will ignore it.
     let author = (this.state.author) ? this.state.author : null;
+    let me = (this.state.me) ? this.state.me : null; 
     let text = (this.state.text) ? this.state.text : null;
-    let comment = { author: author, text: text};
+    let comment = { author: author, me: me, text: text};
     this.props.onCommentUpdate(id, comment);
     this.setState({
       toBeUpdated: !this.state.toBeUpdated,
       author: '',
+      me: '',    
       text: ''
     })
   }
@@ -49,6 +53,9 @@ class Comment extends Component {
   handleAuthorChange(e) {
     this.setState({ author: e.target.value });
   }
+  handleMeChange(e) {
+    this.setState({ me: e.target.value });
+  }    
   rawMarkup() {
     let rawMarkup = marked(this.props.children.toString());
     return { __html: rawMarkup };
@@ -56,7 +63,7 @@ class Comment extends Component {
   render() {
     return (
       <div style={ style.comment }>
-        <h3>{this.props.author}</h3>
+        {this.props.author}
         <span dangerouslySetInnerHTML={ this.rawMarkup() } />
         <a style={ style.updateLink } href='#' onClick={ this.updateComment }>update</a>
         <a style={ style.deleteLink } href='#' onClick={ this.deleteComment }>delete</a>
@@ -68,6 +75,12 @@ class Comment extends Component {
                 style={ style.commentFormAuthor }
                 value={ this.state.author }
                 onChange={ this.handleAuthorChange } />
+             <input
+                type='text'
+                placeholder='Changed by me...'
+                style={ style.commentFormAuthor }
+                value={ this.state.me }
+                onChange={ this.handleMeChange } />
               <input
                 type='text'
                 placeholder='Update your comment...'

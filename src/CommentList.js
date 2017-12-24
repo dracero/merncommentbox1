@@ -13,6 +13,7 @@ class CommentList extends Component {
           onCommentDelete={ this.props.onCommentDelete }
           onCommentUpdate={ this.props.onCommentUpdate }
           key={ comment.id }>
+          { comment.me }
           { comment.text }
         </Comment>
       )
